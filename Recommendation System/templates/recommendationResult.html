@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #666666;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #ff7300;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .buddy {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .buddy h3 {
+            margin: 0;
+            color: #333333;
+        }
+
+        .buddy p {
+            margin: 0;
+            color: #666666;
+        }
+
+        #recommendationResults {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #recommendationResults th, #recommendationResults td {
+            padding: 8px;
+        border: 1px solid #ddd;
+        }
+
+        #recommendationResults th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        #recommendationResults .buddy {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .backButton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ee8712;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .backButton:hover {
+            background-color: #ff7300;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <h1>Recommendation Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Sports</th>
+                <th>rating</th>
+                <th>State</th>
+                <th>Athlete</th>
+                <th>Time</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="recommendationTableBody">
+            {% for buddy in results %}
+            <tr>
+                <td>{{ buddy['Name'] }}</td>
+                <td>{{ buddy['Gender'] }}</td>
+                <td>{{ buddy['Age'] }}</td>
+                <td>{{ buddy['Sports'] }}</td>
+                <td>{{ buddy['rating'] }}</td>
+                <td>{{ buddy['State'] }}</td>
+                <td>{{ buddy['Athlete'] }}</td>
+                <td>{{ buddy['Time'] }}</td>
+                <td>
+                    <button class="addBuddyButton" data-name="{{ buddy['Name'] }}">Add Buddy</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+                
+    </table>
+
+
+    <a href="{{ url_for('home') }}"><button>Back to Homepage</button></a>
+
+    <script>
+        // Display recommendation results
+        function displayResults(results) {
+            var tableBody = document.getElementById('recommendationTableBody');
+            tableBody.innerHTML = '';
+
+            if (results.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6">No results found.</td></tr>';
+                return;
+            }
+
+            results.forEach(function(buddy) {
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>' + buddy.Name + '</td>' +
+                    '<td>' + buddy.Gender + '</td>' +
+                    '<td>' + buddy.Age + '</td>' +
+                    '<td>' + buddy.Sports + '</td>' +
+                    '<td>' + buddy.rating + '</td>' +
+                    '<td>' + buddy.State + '</td>' +
+                    '<td>' + buddy['Athlete'] + '</td>' +
+                    '<td>' + buddy['Time'] + '</td>';
+                tableBody.appendChild(row);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
